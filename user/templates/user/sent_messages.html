@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Sent{% endblock %}
+
+{% block content %}
+  <h1>Sent Messages</h1>
+      <ul>
+        {% for user in object_list %}
+            <li> <a href="{% url 'sent' username=user.sender to=user.recipient %}">{{ user.recipient }}</a> </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

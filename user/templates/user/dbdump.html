@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Database dump</title>
+</head>
+<style type="text/css">
+td
+{
+border: 1px solid black;
+}
+</style>
+<body>
+<h3>User table</h3>
+<table style="width:100%">
+  <tr>
+    <th>Username</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Secret question</th>
+    <th>Secret answer</th>
+  </tr>
+  {% for i in users %}
+    <tr>
+      {% for k,v in i.items %}
+        <td>{{ v }}</td>
+          {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<h3> Message table</h3>
+<table style="width:100%">
+  <tr>
+    <th>Sender</th>
+    <th>Recipient</th>
+    <th>Content</th>
+    <th>Sending time</th>
+  </tr>
+  {% for i in messages %}
+    <tr>
+      {% for k, v in i.items %}
+          <td> {{ v }} </td>
+      {% endfor %}
+    </tr>
+
+    {% endfor %}
+</table>
+</body>
+</html>

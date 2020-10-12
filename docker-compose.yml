@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    command: gunicorn message.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    networks:
+      - nginx_network
+      - db_network
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  nginx:
+    image: nginx:1.16
+    ports:
+      - 8000:80
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - web
+    networks:
+      - nginx_network
+  db:
+    image: postgres:12.0-alpine
+    env_file:
+    - config/db/.env.db
+    networks:
+      - db_network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+networks:
+    nginx_network:
+      driver: bridge
+    db_network:
+      driver: bridge
+volumes:
+  postgres_data:

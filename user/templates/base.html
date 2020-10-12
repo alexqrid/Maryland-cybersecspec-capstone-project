@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static "css/base.css" %}" rel="stylesheet">
+</head>
+<body>
+  <div id="header">
+    <span class="logo">
+      <a  href="{% url 'index' %}">
+        Simple messaging system</a>
+
+        {% if request.user.is_authenticated %}
+          <a href="{% url 'dashboard' username=request.user.username %}">Hello {{ request.user.first_name }} </a>
+        {% endif %}
+    </span>
+
+  <span class="user">
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'create' %}">Create message</a>
+
+    <a href="{% url 'sent-list' username=user %}">Sent</a>
+
+      <a href="{% url 'received-list' username=user %}">Received</a>
+
+      <a href="{% url "logout" %}">Logout</a>
+    {% else %}
+      <a href="{% url "login" %}">Log-in</a>
+      <a href="{% url "register" %}">Register</a>
+    {% endif %}
+  </span>
+  </div>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+            <a href="#" class="close">x</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>

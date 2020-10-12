@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Inbox{% endblock %}
+
+{% block content %}
+    {% if sent %}
+    <h1> Sent to {{ recipient }}</h1>
+    {% else %}
+    <h1> Received from {{ sender }}</h1>
+    {% endif %}
+    <ul>
+        {% for message in object_list %}
+            <p> {{ message.created_at|date:"D d M Y" }} {{ message.created_at|time:"H:i" }} </p>
+            <li> {{ message.content }} </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

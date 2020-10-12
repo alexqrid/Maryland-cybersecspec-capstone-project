@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Received{% endblock %}
+
+{% block content %}
+  <h1>Received Messages</h1>
+      <ul>
+        {% for user in object_list %}
+            <li> <a href="{% url 'received' username=user.recipient from=user.sender%}">{{ user.sender }}</a> </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
